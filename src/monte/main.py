@@ -24,7 +24,7 @@ def run(
         result, value = scenario(value, bid_size, multiplier, chance)
         results = results[0] + result[0], results[1] + result[1]
         sequence.append((result, value, instance))
-        if instances % 2:
+        if instances % 3:
             s.append(
                 {
                     "Rolls": instances,
@@ -43,14 +43,11 @@ def run(
                 }
             )
             break
-    print(
-        f"End results {instances} rolls.\nWins: {results[0]}\nLosses: {results[1]}\nEnding Cash: {round(value)}"
-    )
     return sequence, s
 
 
 if __name__ == "__main__":
-    multiplier = {True: 1.15, False: 0.6}
+    multiplier = {True: 1.15, False: 0.7}
     chance = 0.85
     bid_size = 0.05
     runs = 2000

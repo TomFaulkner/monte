@@ -13,7 +13,9 @@ def scenario(value, bid_size, multiplier, chance):
     return {True: (1, 0), False: (0, 1)}[result], value
 
 
-def run(instance: int, bid_size, multiplier={True: 1.25, False: 0.6}, chance=0.5, rolls=50):
+def run(
+    instance: int, bid_size, multiplier={True: 1.25, False: 0.6}, chance=0.5, rolls=50
+):
     s = []
     value = 1000.0
     results = (0, 0)
@@ -48,22 +50,24 @@ def run(instance: int, bid_size, multiplier={True: 1.25, False: 0.6}, chance=0.5
 
 
 if __name__ == "__main__":
-    multiplier={True: 1.15, False: 0.6}
-    chance=0.85
-    bid_size=0.05
+    multiplier = {True: 1.15, False: 0.6}
+    chance = 0.85
+    bid_size = 0.05
     runs = 2000
     rolls = 300
     all_results = []
     for instance in range(runs):
-        all_results.append({'Rolls': 0, 'Money': 1000, 'Instance': instance})
+        all_results.append({"Rolls": 0, "Money": 1000, "Instance": instance})
     for instance in range(runs):
         _, result = run(instance, bid_size, multiplier, chance, rolls)
         all_results.extend(result)
     df = DataFrame(all_results, columns=["Rolls", "Money", "Instance"])
-    print(f'''
+    print(
+        f"""
     Max: {max([v["Money"] for v in all_results])}
     Min: {min([v["Money"] for v in all_results])}
     Mean: {mean([v["Money"] for v in all_results])}
-    ''')
+    """
+    )
     sns.lineplot(data=df, x="Rolls", y="Money", hue="Instance", size=0)
     plt.show()
